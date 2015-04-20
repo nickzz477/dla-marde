@@ -1,13 +1,23 @@
 #include "MMan.h"
 
 MMan::MMan()
-	: Animation(GIMMICKV2_PATH, IDLE_NB_FRAME(), ANIM_DEFAULT_SPEED, FRAME_SIZE(), IDLE_START_SRC())
+	: Animation(Texture::ID::MMan, IDLE_NB_FRAME(), FRAME_RATE, IDLE_START_SRC(), FRAME_SIZE())
 	, currentState(IDLE)
+	, currentX(0)
+	, currentY(characterY)
+	, currenTime(0)
 	, characterX(20)
-	, characterY(167)
+	, characterY(334)
+	, flipped(false)
+	, isJumping(false)
+	, gravity(1.0f)
+	, jump(1.7f)
+	, verticalVelocity(0)
 {
-	SetDstFrame(characterX, characterY, 32, 32);
-	//Start the animation on creation
+	Scale(2);
+	SetDstFrame(characterX, characterY, 64, 64);
+
+	////Start the animation on creation
 	this->Play();
 	//Make it loop
 	this->SetIsLooping(true);
@@ -21,16 +31,16 @@ void MMan::changeState(state newState)
 		switch (newState)
 		{
 		case IDLE:
-			this->SetStartSrcPos(IDLE_START_SRC());
+			this->SetSrcPos(IDLE_START_SRC());
 			this->SetNbFrame(IDLE_NB_FRAME());
 			break;
 		case WALK:
-			this->SetStartSrcPos(WALK_START_SRC());
+			this->SetSrcPos(WALK_START_SRC());
 			this->SetNbFrame(WALK_NB_FRAME());
 			break;
-		case DIZZY:
-			this->SetStartSrcPos(DIZZY_START_SRC());
-			this->SetNbFrame(DIZZY_NB_FRAME());
+		case JUMP:
+			this->SetSrcPos(JUMP_START_SRC());
+			this->SetNbFrame(JUMP_NB_FRAME());
 			break;
 		default:
 			break;
@@ -43,44 +53,80 @@ void MMan::changeState(state newState)
 
 void MMan::Update()
 {
+	float dt = Engine::GetInstance()->GetTimer()->GetDeltaTime();
+
 	//Very important, otherwise our animation won't update itself
 	Animation::Update();
 
-	//Don't mind the brackets. Simply tried to save some screen space.
-	//Press Space to Pause & Resume
-	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_SPACE)){
-		if (this->GetIsPlaying()){
-			this->Stop(); }
-		else {
-			this->Play();}
+#pragma region JUMP
+	verticalVelocity += gravity * dt;
+	
+	if (isJumping)
+	{
+		verticalVelocity -= jump * dt;
 	}
-	//Press 1 for Idle
-	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_1)){
-		changeState(IDLE);
+	if (currentY + verticalVelocity >= characterY && verticalVelocity > 0)
+	{
+		verticalVelocity = 0;
+		currentY = characterY;
 	}
-	//Press 2 for right
-	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_D)){
+	if (currentY + verticalVelocity <= 200 && verticalVelocity < 0)
+	{
+		verticalVelocity = 0;
+		currentY = 200;
+		isJumping = false;
+	}
+	currentY += verticalVelocity;
+#pragma endregion
+	
+	//press space to jump
+	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_SPACE))
+	{
+		changeState(JUMP);
+		if (currentY == characterY)
+		{
+			isJumping = true;
+		}
+	}
+	//Jump released
+	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_SPACE))
+	{
+		isJumping = false;
+	}
+	//Press D for right
+	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_D))
+	{
 		changeState(WALK);
-		SetDstFrame((characterX += 1), characterY, 32, 32);
+		if (!flipped)
+		{
+			Flip(1);
+			flipped = true;
+		}
+
+		currentX += 250 * dt;
 	}
-	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_D)){
+	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_D))
+	{
 		changeState(IDLE);
-		SetDstFrame(characterX, characterY, 32, 32);
 	}
 	//Press A for left
-	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_A)){
+	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_A))
+	{
 		changeState(WALK);
-		SetDstFrame((characterX -= 1), characterY, 32, 32);
+		if (flipped)
+		{
+			Flip(0);
+			flipped = false;
+		}
+		currentX -= 250 * dt;
+		
 	}
-	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_A)){
+	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_A))
+	{
 		changeState(IDLE);
-		SetDstFrame(characterX, characterY, 32, 32);
-	}
-	//Press 3 for Dizzy
-	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_3)){
-		changeState(DIZZY);
 	}
 
+	SetPosition((int)currentX, (int)currentY);
 }
 
 MMan::~MMan()

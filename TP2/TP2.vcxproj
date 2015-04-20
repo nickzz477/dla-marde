@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="BBMan.h" />
     <ClInclude Include="MMan.h" />
+    <ClInclude Include="ResourceIDs.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>

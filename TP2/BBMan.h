@@ -7,6 +7,7 @@
 
 #include "Common.h"
 #include "Animation.h"
+#include "ResourceIDs.h"
 
 class BBMan :
 	public Animation

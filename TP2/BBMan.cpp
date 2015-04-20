@@ -1,7 +1,7 @@
 #include "BBMan.h"
 
 BBMan::BBMan()
-: Animation(GIMMICKV2_PATH, IDLE_NB_FRAME(), ANIM_DEFAULT_SPEED, FRAME_SIZE(), IDLE_START_SRC())
+: Animation(Texture::ID::BBMan, IDLE_NB_FRAME(), ANIM_DEFAULT_SPEED, FRAME_SIZE(), IDLE_START_SRC())
 , currentState(IDLE)
 {
 	//Start the animation on creation
@@ -18,15 +18,15 @@ void BBMan::changeState(state newState)
 		switch (newState)
 		{
 		case IDLE:
-			this->SetStartSrcPos(IDLE_START_SRC());
+			this->SetSrcPos(IDLE_START_SRC());
 			this->SetNbFrame(IDLE_NB_FRAME());
 			break;
 		case WALK:
-			this->SetStartSrcPos(WALK_START_SRC());
+			this->SetSrcPos(WALK_START_SRC());
 			this->SetNbFrame(WALK_NB_FRAME());
 			break;
 		case DIZZY:
-			this->SetStartSrcPos(DIZZY_START_SRC());
+			this->SetSrcPos(DIZZY_START_SRC());
 			this->SetNbFrame(DIZZY_NB_FRAME());
 			break;
 		default:

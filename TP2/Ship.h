@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "Sprite.h"
+#include "ResourceIDs.h"
 
 class Ship :
 	public Sprite
