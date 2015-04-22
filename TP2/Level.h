@@ -4,12 +4,12 @@
 #include "Sprite.h"
 #include "ResourceIDs.h"
 
-class Ship :
+class Level :
 	public Sprite
 {
 public:
-	Ship();
-	~Ship();
+	Level();
+	~Level();
 
 	void Start();
 	void Update();

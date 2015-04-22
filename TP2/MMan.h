@@ -6,6 +6,7 @@
 #include "Common.h"
 #include "Animation.h"
 #include "ResourceIDs.h"
+#include "Lemons.h"
 #define FRAME_RATE 8
 
 class MMan:
@@ -19,6 +20,7 @@ public:
 
 private:
 	int characterX, characterY;
+	Pool<Lemons>* pool;
 
 	//States used to determine which animation will take place 
 	enum state { IDLE, WALK, JUMP };
