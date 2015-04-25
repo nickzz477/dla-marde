@@ -81,13 +81,17 @@ void MMan::Update()
 	currentY += verticalVelocity;
 #pragma endregion
 	
-	//press space to jump
+	//press N to shoot
 	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_N))
 	{
 		Lemons* l = pool->NewInstance();
-		l->Init(currentX, currentY, false);
-		//l->isShot = true;
-		//if (l->currentX)
+		l->Init(currentX+32, currentY+24, false);
+		l->isShot = true;
+		l->flipped = flipped;
+		if (l->currentX >= 450)
+		{
+			pool->FreeInstance(l);
+		}
 	}
 	//press space to jump
 	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_SPACE))

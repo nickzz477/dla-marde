@@ -32,12 +32,17 @@ void Lemons::Start()
 void Lemons::Update()
 {
 	float dt = Engine::GetInstance()->GetTimer()->GetDeltaTime();
-	if (isShot)
+
+	if (isShot && flipped)
 	{
 		currentX += SPEED*dt;
 		SetPosition(currentX, currentY);
 	}
-	
+	else if (isShot && !flipped)
+	{
+		currentX -= SPEED*dt;
+		SetPosition(currentX, currentY);
+	}
 }
 
 void Lemons::Stop()

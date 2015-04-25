@@ -17,13 +17,14 @@ public:
 	void Stop();
 
 	void Init(const float shootPositionX, const float shootPositionY, const bool isReverse);
-
+	float currentX, currentY;
+	bool isShot;
+	bool flipped;
 	
 
 protected:
 
-	//float currentX, currentY;
-	//bool isShot;
+	
 
 private:
 	
