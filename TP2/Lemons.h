@@ -3,10 +3,11 @@
 #include "Common.h"
 #include "Sprite.h"
 #include "ResourceIDs.h"
-#include "Pool.h"
+#include "PoolObject.h"
+
 
 class Lemons :
-	public Sprite
+	public Sprite, public PoolObject<Lemons>
 {
 public:
 	Lemons();

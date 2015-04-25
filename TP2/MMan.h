@@ -20,7 +20,6 @@ public:
 
 private:
 	int characterX, characterY;
-	Pool<Lemons>* pool;
 
 	//States used to determine which animation will take place 
 	enum state { IDLE, WALK, JUMP };

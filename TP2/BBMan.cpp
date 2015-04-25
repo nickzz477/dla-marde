@@ -1,5 +1,5 @@
 #include "BBMan.h"
-
+// TO DO
 BBMan::BBMan()
 : Animation(Texture::ID::BBMan, IDLE_NB_FRAME(), ANIM_DEFAULT_SPEED, FRAME_SIZE(), IDLE_START_SRC())
 , currentState(IDLE)
