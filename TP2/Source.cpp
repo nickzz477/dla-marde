@@ -1,5 +1,5 @@
 #include "Common.h"
-#include "Level.h"
+#include "Ship.h"
 #include "MMan.h"
 #include "ResourceIDs.h"
 
@@ -10,15 +10,14 @@ int main(int argc, char* args[])
 
 	Textures->LoadTexture(Texture::ID::BKG, "Background.png");
 	Textures->LoadTexture(Texture::ID::MMan, "MMAN.png");
-	Textures->LoadTexture(Texture::ID::LMNS, "Lemons.png");
 
-	Level* level = new Level();
+	Ship* ship = new Ship();
 	MMan* megaman = new MMan();
 
 	// L'engin vire
 	Engine::GetInstance()->Run();
 
-	delete level;
+	delete ship;
 	delete megaman;
 
 	return 0;

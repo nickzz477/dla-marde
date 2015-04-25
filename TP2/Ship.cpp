@@ -1,6 +1,6 @@
-#include "Level.h"
+#include "Ship.h"
 
-Level::Level()
+Ship::Ship()
 	: Sprite(Texture::ID::BKG, point<int>(0,0), point<int>( 522, 496))
 	, currentX(0)
 	, currentY(0)
@@ -8,20 +8,20 @@ Level::Level()
 {
 }
 
-Level::~Level()
+Ship::~Ship()
 {
 }
 
-void Level::Start()
+void Ship::Start()
 {
 	Sprite::SetPosition(currentX, currentY);
 }
 
-void Level::Update()
+void Ship::Update()
 {
 
 }
 
-void Level::Stop()
+void Ship::Stop()
 {
 }

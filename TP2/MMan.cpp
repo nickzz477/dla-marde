@@ -14,8 +14,6 @@ MMan::MMan()
 	, jump(1.7f)
 	, verticalVelocity(0)
 {
-	pool = new Pool<Lemons>(3);
-
 	Scale(2);
 	SetDstFrame(characterX, characterY, 64, 64);
 
@@ -81,14 +79,6 @@ void MMan::Update()
 	currentY += verticalVelocity;
 #pragma endregion
 	
-	//press space to jump
-	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_N))
-	{
-		Lemons* l = pool->NewInstance();
-		l->Init(currentX, currentY, false);
-		//l->isShot = true;
-		//if (l->currentX)
-	}
 	//press space to jump
 	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_SPACE))
 	{
