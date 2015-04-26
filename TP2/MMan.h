@@ -22,7 +22,7 @@ private:
 	int characterX, characterY;
 
 	//States used to determine which animation will take place 
-	enum state { IDLE, WALK, JUMP };
+	enum state { IDLE, WALK, JUMP, SHOT };
 	state currentState;
 	float currentX, currentY, gravity, jump, verticalVelocity;
 	float currenTime;
@@ -35,9 +35,13 @@ private:
 	const int IDLE_NB_FRAME() { return 2; }
 	const int WALK_NB_FRAME() { return 3; }
 	const int JUMP_NB_FRAME() { return 1; }
+	const int SHOT_NB_FRAME() { return 1; }
+	const int WASH_NB_FRAME() { return 4; }
 	const point<int> FRAME_SIZE() { return{ 32, 32 }; };
 	const point<int> IDLE_START_SRC() { return{0, 0 }; };
 	const point<int> WALK_START_SRC() { return{ 64, 0 }; };
 	const point<int> JUMP_START_SRC() { return{ 160, 0 }; };
+	const point<int> SHOT_START_SRC() { return{ 224, 0 }; };
+	const point<int> WASH_START_SRC() { return{ 256, 0 }; };
 };
 

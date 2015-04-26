@@ -80,15 +80,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BBMan.cpp" />
+    <ClCompile Include="BBs.cpp" />
     <ClCompile Include="Lemons.cpp" />
     <ClCompile Include="MMan.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Opening.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BBMan.h" />
+    <ClInclude Include="BBs.h" />
     <ClInclude Include="Lemons.h" />
     <ClInclude Include="MMan.h" />
+    <ClInclude Include="Opening.h" />
     <ClInclude Include="ResourceIDs.h" />
     <ClInclude Include="Level.h" />
   </ItemGroup>

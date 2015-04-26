@@ -6,6 +6,8 @@ namespace Texture
 	enum ID
 	{
 		BKG,
+		BBS,
+		OPN,
 		LMNS,
 		MMan,
 		BBMan
