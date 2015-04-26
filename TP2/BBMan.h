@@ -19,8 +19,9 @@ public:
 	void Update();
 	void Jump(const bool flipped, const float dt);
 	void Move(const bool flipped, const float dt);
-	void Shoot(const bool flipped, const float dt);
-
+	void Shoot(bool flipped, const float dt, BBs* BB);
+	void Pattern(bool flipped, const float dt, BBs* BB);
+	void ReversePattern(bool flipped, const float dt, BBs* BB);
 private:
 	int characterX, characterY;
 

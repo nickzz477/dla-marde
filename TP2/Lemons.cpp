@@ -45,7 +45,7 @@ void Lemons::Update()
 		currentX -= SPEED*dt;
 		SetPosition(currentX, currentY);
 	}
-	if (this->currentX >= 450)
+	if (this->currentX >= 450 || this->currentX <= 25)
 	{
 		pool->FreeInstance(this);
 		isVisible = false;

@@ -3,7 +3,7 @@
 
 
 BBs::BBs()
-	: Sprite(Texture::ID::BBS, point<int>(0, 0), point<int>(8, 7))
+	: Sprite(Texture::ID::BBS, point<int>(0, 0), point<int>(14, 14))
 	, SPEED(1000.0f)
 {
 
@@ -45,7 +45,7 @@ void BBs::Update()
 		currentX -= SPEED*dt;
 		SetPosition(currentX, currentY);
 	}
-	if (this->currentX >= 450)
+	if (this->currentX >= 450 || this->currentX <= 25)
 	{
 		pool->FreeInstance(this);
 		isVisible = false;
