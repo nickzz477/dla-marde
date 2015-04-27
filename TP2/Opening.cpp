@@ -20,7 +20,7 @@ void Opening::Start()
 
 void Opening::Update()
 {
-	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_B))
+	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_RETURN))
 	{
 		isVisible = false;
 	}

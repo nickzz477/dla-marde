@@ -1,10 +1,3 @@
-	//this is the boss
-	//normally, i want him to shoot three times,
-	//jump once and then move the to other corner of the room,
-	//reverse and start again
-
-	//first, create a pool for his bullets
-
 #include "BBMan.h"
 
 BBMan::BBMan()
@@ -20,12 +13,14 @@ BBMan::BBMan()
 	, gravity(1.0f)
 	, jump(1.7f)
 	, verticalVelocity(0)
+	, dir(1)
 {
-	BBs::pool = new Pool<BBs>(30);
+	BBs::pool = new Pool<BBs>(10);
 	Scale(2);
 	SetDstFrame(characterX, characterY, 64, 64);
 	currentX = characterX;
 	currentY = characterY;
+
 	////Start the animation on creation
 	this->Play();
 	//Make it loop
@@ -60,92 +55,95 @@ void BBMan::changeState(state newState)
 	}
 }
 
+void BBMan::Jump(const bool flipped, const float dt)
+{
+	changeState(JUMP);
+	if (currentY == characterY)
+	{
+		isJumping = true;
+	}
+	verticalVelocity += gravity * dt;
+	
+	if (isJumping)
+	{
+		verticalVelocity -= jump * dt;
+	}
+	if (currentY + verticalVelocity >= characterY && verticalVelocity > 0)
+	{
+		verticalVelocity = 0;
+		currentY = characterY;
+	}
+	if (currentY + verticalVelocity <= 200 && verticalVelocity < 0)
+	{
+		verticalVelocity = 0;
+		currentY = 200;
+		isJumping = false;
+	}
+	currentY += verticalVelocity;
+}
+
+void BBMan::Move(const bool flipped, const float dt)
+{
+	//does not work
+	changeState(WALK);
+	
+	currentX -= dir * 500 * dt;
+
+	
+	
+	if (currentX <= 25)
+	{
+		dir = -1;
+		currentX += 500 * dt;
+		Flip(1);
+		this->flipped = true;
+	}
+	else if (currentX >= 425)
+	{
+		dir = 1;
+		currentX -= 500 * dt;
+		Flip(0);
+		this->flipped = false;
+	}
+	
+}
+
+void BBMan::Shoot(const bool flipped)
+{
+	BBs* bb = nullptr;
+	bb = bb->pool->NewInstance();
+	bb->Init(currentX + 32, currentY + 24, false);
+	bb->isShot = true;
+	bb->flipped = flipped;
+}
+
+void BBMan::Pattern(bool flipped, const float dt, BBs* BB)
+{
+	//does not work
+}
+
+void BBMan::ReversePattern(bool flipped, const float dt, BBs* BB)
+{
+	//does not work
+}
+
 void BBMan::Update()
 {
-	float dt = Engine::GetInstance()->GetTimer()->GetDeltaTime();
-
-	//Very important, otherwise our animation won't update itself
 	Animation::Update();
 
-#pragma region JUMP
-//	verticalVelocity += gravity * dt;
-//
-//	if (isJumping)
-//	{
-//		verticalVelocity -= jump * dt;
-//	}
-//	if (currentY + verticalVelocity >= characterY && verticalVelocity > 0)
-//	{
-//		verticalVelocity = 0;
-//		currentY = characterY;
-//	}
-//	if (currentY + verticalVelocity <= 200 && verticalVelocity < 0)
-//	{
-//		verticalVelocity = 0;
-//		currentY = 200;
-//		isJumping = false;
-//	}
-//	currentY += verticalVelocity;
-#pragma endregion
+	float dt = Engine::GetInstance()->GetTimer()->GetDeltaTime();
+	currenTime += dt;
+	
+	Jump(flipped, dt);
 
-//	BBs* BB = nullptr;
-//	//press N to shoot
-//	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_N))
-//	{
-//		BB = BB->pool->NewInstance();
-//		BB->Init(currentX + 32, currentY + 24, false);
-//		BB->isShot = true;
-//		BB->flipped = flipped;
-//
-//	}
-//
-//	//press space to jump
-//	if (Engine::GetInstance()->GetInput()->IsKeyPressed(SDL_SCANCODE_SPACE))
-//	{
-//		changeState(JUMP);
-//		if (currentY == characterY)
-//		{
-//			isJumping = true;
-//		}
-//	}
-//	//Jump released
-//	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_SPACE))
-//	{
-//		isJumping = false;
-//	}
-//	//Press D for right
-//	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_D))
-//	{
-//		changeState(WALK);
-//		if (!flipped)
-//		{
-//			Flip(1);
-//			flipped = true;
-//		}
-//
-//		currentX += 250 * dt;
-//	}
-//	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_D))
-//	{
-//		changeState(IDLE);
-//	}
-//	//Press A for left
-//	if (Engine::GetInstance()->GetInput()->IsKeyHeld(SDL_SCANCODE_A))
-//	{
-//		changeState(WALK);
-//		if (flipped)
-//		{
-//			Flip(0);
-//			flipped = false;
-//		}
-//		currentX -= 250 * dt;
-//
-//	}
-//	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_A))
-//	{
-//		changeState(IDLE);
-//	}
-//
+	if (currenTime > 1.f)
+	{
+		Shoot(flipped); // works only once?? // Doesn't work anymore fuck that
+		currenTime = 0;
+	}
+
+	Move(flipped, dt);
+
 	SetPosition((int)currentX, (int)currentY);
 }
 

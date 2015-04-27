@@ -5,6 +5,7 @@
 BBs::BBs()
 	: Sprite(Texture::ID::BBS, point<int>(0, 0), point<int>(14, 14))
 	, SPEED(1000.0f)
+	, flipped(false)
 {
 
 	Scale(2);
@@ -34,6 +35,7 @@ void BBs::Start()
 void BBs::Update()
 {
 	float dt = Engine::GetInstance()->GetTimer()->GetDeltaTime();
+
 
 	if (isShot && flipped)
 	{

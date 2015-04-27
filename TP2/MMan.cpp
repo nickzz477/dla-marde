@@ -6,7 +6,7 @@ MMan::MMan()
 	, currentX(0)
 	, currentY(characterY)
 	, currenTime(0)
-	, characterX(20)
+	, characterX(25)
 	, characterY(334)
 	, flipped(false)
 	, isJumping(false)
@@ -88,7 +88,6 @@ void MMan::Update()
 		l->Init(currentX+32, currentY+24, false);
 		l->isShot = true;
 		l->flipped = flipped;
-		
 	}
 	
 	//press space to jump
@@ -114,8 +113,10 @@ void MMan::Update()
 			Flip(1);
 			flipped = true;
 		}
-
-		currentX += 250 * dt;
+		if (currentX < 425)
+		{
+			currentX += 250 * dt;
+		}
 	}
 	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_D))
 	{
@@ -130,7 +131,10 @@ void MMan::Update()
 			Flip(0);
 			flipped = false;
 		}
-		currentX -= 250 * dt;
+		if (currentX > 25)
+		{
+			currentX -= 250 * dt;
+		}
 		
 	}
 	if (Engine::GetInstance()->GetInput()->IsKeyReleased(SDL_SCANCODE_A))

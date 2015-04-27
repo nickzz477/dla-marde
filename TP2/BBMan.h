@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Jump(const bool flipped, const float dt);
 	void Move(const bool flipped, const float dt);
-	void Shoot(bool flipped, const float dt, BBs* BB);
+	void Shoot(bool flipped);
 	void Pattern(bool flipped, const float dt, BBs* BB);
 	void ReversePattern(bool flipped, const float dt, BBs* BB);
 private:
@@ -29,7 +29,7 @@ private:
 	enum state { IDLE, WALK, JUMP, SHOT };
 	state currentState;
 	float currentX, currentY, gravity, jump, verticalVelocity;
-	float currenTime;
+	float currenTime, dir;
 	bool flipped, isJumping;
 
 	//State Setter
